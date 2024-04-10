@@ -1,0 +1,25 @@
+<h1>items</h1>
+
+{{#each items}}
+<div>
+    <a href="/items/{{this._id}}"><h3>{{this.description}}</h3></a></a>
+</div>
+
+{{/each}}
+
+
+<div class='btnPagesContainer'>
+    {{#if hasPrevPage}}
+        <a href="{{prevLink}}"><button >Prev</button></a>
+    {{else}}
+        <button disabled>Prev</button>
+    {{/if}}
+
+    {{#if hasNextPage}}
+   
+        <a href="{{nextLink}}"><button >Next</button></a>
+    </button>
+    {{else}}
+        <button class='btnPageDisabled' disabled>Next</button>
+    {{/if}}
+</div>

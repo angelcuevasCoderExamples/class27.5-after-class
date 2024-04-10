@@ -1,0 +1,38 @@
+<h1>real time</h1>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody id="tbodyId">
+        {{#each items}}
+            <tr>
+                <td>{{this._id}}</td>
+                <td>{{this.description}}</td>
+                <td><button onclick="deleteItem('{{this._id}}')">delete</button></td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h2>Form</h2>
+
+<div id="itemForm">
+
+    <input type="text" id="itemDescription" placeholder="description"/>
+    <button id="createItemButton">Crear</button>
+</div>
+
+<h2>HTML Form</h2>
+<form action="/api/items" method="POST">
+    <input type="text" name="description" />
+    <button type="submit">crear desde form</button>
+</form>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realtime.js"></script>

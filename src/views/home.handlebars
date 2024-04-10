@@ -1,0 +1,20 @@
+<h1>Home</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each items}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.description}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
