@@ -3,6 +3,7 @@ const userModel = require('../dao/models/user');
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
 const { getToken } = require('../utils');
+const { jwtSecret } = require('../config/config');
 
 const sessionRouter = Router();
 
@@ -38,7 +39,7 @@ sessionRouter.post('/login',
             cart, 
             email
         }
-        const token = jwt.sign(serializableUser,'JWT_SECRET',{expiresIn:'1h'})
+        const token = jwt.sign(serializableUser, jwtSecret,{expiresIn:'1h'})
         res.cookie('jwtCookie', token);
 
         res.send({status:'success', message:'User logged successfuly'})

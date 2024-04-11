@@ -3,39 +3,22 @@ const CartManager = require('../dao/dbManagers/CartManager');
 const ItemsManager = require('../dao/dbManagers/ItemsManager');
 const jwt = require('jsonwebtoken');
 const { getToken } = require('../utils');
+const ViewsController = require('../controllers/views.controller');
 
 const manager = new ItemsManager()
 const cartManager = new CartManager()
 
 const router = Router();
 
-router.get('/',async (req, res)=>{
-    const items = await manager.getItems()
-    res.render('home',{items:items})
-})
+router.get('/', ViewsController.getHome)
 
-router.get('/realtimeitems',async (req,res)=>{
-    const items = await manager.getItems()
-    res.render('realTimeItems',{items})
-})
+router.get('/realtimeitems', ViewsController.getRealTimeItems)
 
-router.get('/chat',(req, res)=>{
-    res.render('chat',{})
-})
+router.get('/chat', ViewsController.getChat)
 
 /** views */
 
-router.get('/items', getToken, async (req, res)=>{    
-
-    try {
-        const {docs,...rest} = await manager.getItems(req.query);
-        
-        res.render('items', {items: docs, user: req.tokenUser, ...rest})
-
-    } catch (error) {
-        res.send({status:'error', error: error.message})
-    }
-})
+router.get('/items', getToken, ViewsController.getItems)
 
 /** alternative */
 router.get('/items.alt', async (req, res)=>{  //alternativa 

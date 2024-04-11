@@ -1,12 +1,14 @@
-const itemModel = require("../models/item");
-class ItemsManager {
+const ItemsDao = require("../dao/items.dao");
 
-    async addItem(item){
-       return await itemModel.create(item); 
+
+class ItemsService {
+    constructor(){
+        this.dao = new ItemsDao(); 
     }
 
-    async getItems(queryParams = null){
-        let result = []
+    async getAll(queryParams = null){
+       //return this.dao.getAll();
+       let result = []
         let opt = {}
         if(queryParams){
             let paginationOpt = {page: queryParams.page || 1, limit: queryParams.limit || 10, lean:true}
@@ -17,16 +19,16 @@ class ItemsManager {
             if(queryParams.query){  
                 opt = this.getOptionsObject(queryParams.query)
             }
-            result =await  itemModel.paginate(opt,paginationOpt)
+            
+            result =await this.dao.getAll(opt,paginationOpt)
 
             if(!paginationOpt.page || result.totalPages < paginationOpt.page || paginationOpt.page <1){
                 throw new Error('Page does not exist')
             }
 
         }else{
-            result = await itemModel.find().lean() 
+            result = await this.dao.getAll() //.lean() 
         }
-
 
         
         let extraLinkParams = ""
@@ -46,6 +48,36 @@ class ItemsManager {
         return result; 
     }
 
+    async getById(id){    
+        return await this.dao.getById(id);
+    }
+
+    async create(toy){
+        return await this.dao.create(toy);
+    }
+
+    async update(id, toy){
+
+        const found = await this.dao.getById(id);
+
+        if(!found){
+            //return null; 
+            throw { message:'Item does not exist', status:400 }
+        }
+
+        return await this.dao.update(id, toy);
+    }
+
+    async delete(id){
+
+        const item = await this.dao.getById(id);
+        if(!item){
+            return null; 
+        }
+
+        return await this.dao.delete(id);
+    }
+
     getOptionsObject(query){
         try {
             const obj = JSON.parse(query)    
@@ -57,18 +89,7 @@ class ItemsManager {
     
     }
 
-    async getItem(id){
-        const items = await itemModel.find({_id: id}).lean()  //alternativamente findOne
-        return items[0]; 
-    }
-
-    async updateItem(id, newItem){
-       return await itemModel.updateOne({_id: id}, newItem)
-    }
-
-    async deleteItem(id){
-        return await itemModel.deleteOne({_id: id})
-    }
 }
 
-module.exports = ItemsManager; 
+
+module.exports = ItemsService;

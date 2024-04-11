@@ -1,5 +1,4 @@
 const express = require('express');
-const port = 8080;
 const itemsRouter = require('./routes/items.router')
 const viewsRouter = require('./routes/views.router')
 const cartRouter = require('./routes/cart.router');
@@ -14,8 +13,9 @@ const session = require('express-session')
 const passport = require('passport')
 const initializePassport = require('./config/passport.config')
 const cookieParser = require('cookie-parser');
+const { mongoConnectionLink, port } = require('./config/config');
 
-mongoose.connect(`mongodb+srv://angelpablocuevas1989:EghP7p3eTEtgWPyu@codercluster.5ny2sqo.mongodb.net/ecommerce`).then(()=>{
+mongoose.connect(mongoConnectionLink).then(()=>{
     console.log('connected to atlas.')
 })
 
