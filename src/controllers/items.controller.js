@@ -10,7 +10,7 @@ class ItemsController {
             let {docs,...rest} = await itemsService.getAll(query)    
             res.send({status:'success', payload: docs, ...rest})
         } catch (error) {
-            res.status(500).send({status:'error', error: error.message })
+            res.status(error.status || 500).send({status:'error', error: error.message })
         }
     
     }
@@ -21,7 +21,7 @@ class ItemsController {
             let item = await itemsService.getById(req.params.id)
             res.send({item: item})
         } catch (error) {
-            res.status(500).send({status:'error', error: error.message })
+            res.status(error.status || 500).send({status:'error', error: error.message })
         }
     
         
@@ -42,7 +42,6 @@ class ItemsController {
             
             res.send({status:'success', details: result})
         } catch (error) {
-            console.log("error", error)
             res.status(error.status || 500).send({status:'error', error: error.message })
         }
     
@@ -54,7 +53,7 @@ class ItemsController {
             const result = await itemsService.delete(id);
             res.send({status:'success', details: result})        
         }catch (error) {
-            res.status(500).send({status:'error', error: error.message })
+            res.status(error.status || 500).send({status:'error', error: error.message })
         }
     
     }

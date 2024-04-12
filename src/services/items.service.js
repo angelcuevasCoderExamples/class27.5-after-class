@@ -1,5 +1,4 @@
-const ItemsDao = require("../dao/items.dao");
-
+const ItemsDao  =require('../dao/dbManagers/items.dao')
 
 class ItemsService {
     constructor(){
@@ -7,7 +6,6 @@ class ItemsService {
     }
 
     async getAll(queryParams = null){
-       //return this.dao.getAll();
        let result = []
         let opt = {}
         if(queryParams){
@@ -49,7 +47,9 @@ class ItemsService {
     }
 
     async getById(id){    
-        return await this.dao.getById(id);
+        const item = await this.dao.getById(id); 
+        if(!item) throw { message:`There's no Item by id ${id}`, status:400 }
+        return item;
     }
 
     async create(toy){
@@ -57,24 +57,12 @@ class ItemsService {
     }
 
     async update(id, toy){
-
-        const found = await this.dao.getById(id);
-
-        if(!found){
-            //return null; 
-            throw { message:'Item does not exist', status:400 }
-        }
-
+        await this.dao.getById(id);
         return await this.dao.update(id, toy);
     }
 
     async delete(id){
-
-        const item = await this.dao.getById(id);
-        if(!item){
-            return null; 
-        }
-
+        await this.dao.getById(id);
         return await this.dao.delete(id);
     }
 

@@ -1,4 +1,4 @@
-const itemModel = require("./models/item");
+const itemModel = require("../models/item");
 
 class ItemsDao {
 

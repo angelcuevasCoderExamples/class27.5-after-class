@@ -3,7 +3,6 @@ const ItemsManager = require("./ItemsManager");
 
 class CartManager {
 
-    //new constructor 
     constructor(){
         this.itemsManager = new ItemsManager(); 
     }
@@ -29,7 +28,7 @@ class CartManager {
         const cart = await this.getCart(id);
 
         const index = cart.items.findIndex(i=>i.item._id == itemId)
-        console.log("index", index)
+        
         if(index >= 0){
             cart.items[index].quantity+=1;  
         }else{
@@ -95,7 +94,6 @@ class CartManager {
         }
 
         cart.items[itemInCartIndex].quantity = parseInt(quantity);
-        console.log("itemInCartIndex", cart.items[itemInCartIndex], quantity)
 
         await cartModel.updateOne({_id: cartId}, cart)
 
