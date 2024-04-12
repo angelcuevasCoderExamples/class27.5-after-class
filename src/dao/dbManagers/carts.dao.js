@@ -8,7 +8,7 @@ class CartsDao {
     }
 
     async getById(id){
-        return await cartModel.findOne({_id:id})
+        return await cartModel.findOne({_id:id}).populate('items.item').lean()
     }
 
     async create(item){
