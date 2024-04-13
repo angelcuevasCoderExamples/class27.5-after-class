@@ -6,17 +6,29 @@ const itemsService = new ItemsService()
 
 class ViewsController {
     static async getHome(req, res){
-        const items = await itemsService.getAll()
-        res.render('home',{items:items})
+        try{
+            const items = await itemsService.getAll()
+            res.render('home',{items:items})
+        } catch (error) {
+            res.status(error.status || 500).send({status:'error', error: error.message})
+        }
     }
 
     static async getRealTimeItems(req, res){
-        const items = await itemsService.getAll()
-        res.render('realTimeItems',{items})
+        try{
+            const items = await itemsService.getAll()
+            res.render('realTimeItems',{items})
+        } catch (error) {
+            res.status(error.status || 500).send({status:'error', error: error.message})
+        }
     }
 
     static async getChat(req, res){
-        res.render('chat',{})
+        try{    
+            res.render('chat',{})
+        } catch (error) {
+            res.status(error.status || 500).send({status:'error', error: error.message})
+        }
     }
 
     static async getItems(req, res){    
@@ -25,7 +37,7 @@ class ViewsController {
             const {docs,...rest} = await itemsService.getAll(req.query);
             res.render('items', {items: docs, style:'items.css', user: req.tokenUser, ...rest})
         } catch (error) {
-            res.send({status:'error', error: error.message})
+            res.status(error.status || 500).send({status:'error', error: error.message})
         }
     }
 
@@ -34,7 +46,7 @@ class ViewsController {
             const {docs,...rest} = await itemsService.getAll(req.query);
             res.render('items_alternative', {items: docs, ...rest})
         } catch (error) {
-            res.send({status:'error', error: error.message})
+            res.status(error.status || 500).send({status:'error', error: error.message})
         }
     }
 
@@ -43,7 +55,7 @@ class ViewsController {
             const item= await itemsService.getById(req.params.iid);
             res.render('item', {item: item, style:'items.css'})
         } catch (error) {
-            res.send({status:'error', error: error.message})
+            res.status(error.status || 500).send({status:'error', error: error.message})
         }
     }
 
@@ -52,20 +64,32 @@ class ViewsController {
             const cart  = await cartService.getById(req.params.cid)
             res.render('cart', {...cart, style:'items.css'})
         } catch (error) {
-            res.send({status:'error', error: error.message})
+            res.status(error.status || 500).send({status:'error', error: error.message})
         }
     }
 
     static async getRegister(req, res){
-        res.render('register',{})
+        try {
+            res.render('register',{})
+        } catch (error) {
+            res.status(error.status || 500).send({status:'error', error: error.message})
+        }
+        
     }
     static async getLogin(req, res){
-        res.render('login')
+        try{
+            res.render('login')
+        } catch (error) {
+            res.status(error.status || 500).send({status:'error', error: error.message})
+        }
     }
 
     static getProfile(req, res){
-        //TODO
-        res.render('profile',{user: {}})
+        try{
+            res.render('profile',{user: {}})
+        } catch (error) {
+            res.status(error.status || 500).send({status:'error', error: error.message})
+        }
     }
 
     static get404(req, res){

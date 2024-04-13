@@ -75,12 +75,12 @@ class CartService {
         await this.itemsService.getById(itemId)
 
         if(!quantity || isNaN(quantity) || quantity < 0){
-            throw new Error('Quantity es not correct')
+            throw {message:'Quantity is not valid', status: 400}
         }
 
         const itemInCartIndex = cart.items.findIndex(i=>i.item._id == itemId)
         if(itemInCartIndex < 0){
-            throw new Error(`Item ${itemId} does not exist in cart`)
+            throw {message:`Item ${itemId} does not exist in cart`, status: 400}
         }
         cart.items[itemInCartIndex].quantity = parseInt(quantity);
 

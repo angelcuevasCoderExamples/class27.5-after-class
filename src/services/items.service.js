@@ -21,11 +21,11 @@ class ItemsService {
             result =await this.dao.getAll(opt,paginationOpt)
 
             if(!paginationOpt.page || result.totalPages < paginationOpt.page || paginationOpt.page <1){
-                throw new Error('Page does not exist')
+                throw {message: 'Page does not exist', status:400}
             }
 
         }else{
-            result = await this.dao.getAll() //.lean() 
+            result = await this.dao.getAll()  
         }
 
         
