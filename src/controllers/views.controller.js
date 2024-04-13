@@ -23,13 +23,13 @@ class ViewsController {
 
         try {
             const {docs,...rest} = await itemsService.getAll(req.query);
-            res.render('items', {items: docs, user: req.tokenUser, ...rest})
+            res.render('items', {items: docs, style:'items.css', user: req.tokenUser, ...rest})
         } catch (error) {
             res.send({status:'error', error: error.message})
         }
     }
 
-    static async getItemsAlt(req, res){  //alternativa 
+    static async getItemsAlt(req, res){ 
         try {
             const {docs,...rest} = await itemsService.getAll(req.query);
             res.render('items_alternative', {items: docs, ...rest})
@@ -38,10 +38,10 @@ class ViewsController {
         }
     }
 
-    static async getItemById(req, res){  //alternativa 
+    static async getItemById(req, res){  
         try {
-            const item= await itemsService.getAll(req.params.iid);
-            res.render('item', {item: item})
+            const item= await itemsService.getById(req.params.iid);
+            res.render('item', {item: item, style:'items.css'})
         } catch (error) {
             res.send({status:'error', error: error.message})
         }
@@ -50,7 +50,7 @@ class ViewsController {
     static async getCartById(req, res){
         try {
             const cart  = await cartService.getById(req.params.cid)
-            res.render('cart', cart)
+            res.render('cart', {...cart, style:'items.css'})
         } catch (error) {
             res.send({status:'error', error: error.message})
         }

@@ -46,8 +46,6 @@ app.use(express.static(`${__dirname}/public`))
 const serverHttp = app.listen(port, ()=>console.log(`Server running on port ${port}`));
 
 
-
-
 //socket.io
 const io = new Server(serverHttp)
 

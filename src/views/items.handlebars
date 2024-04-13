@@ -1,20 +1,23 @@
+<div class="navbar">
+    <div class="user-info">
+        <p>{{user.email}}</p>
+        <a href="/api/sessions/logout"><button>logout</button></a>
+    </div>
+</div>
+
 <h1>items</h1>
 
-<div>
-    <p>{{user.email}}</p>
-    <a href="/api/sessions/logout"><button>logout</button></a>
+<div class="items-container">
+    {{#each items}}
+        <div class="item-card">
+            <a href="/items/{{this._id}}"><h3>{{this.description}}</h3></a>
+            <small>{{this._id}}</small>
+            <p>category: {{this.category}}</p>
+            <p>price: {{this.price}}</p>
+            <button>Add to cart</button>
+        </div>
+    {{/each}}
 </div>
-
-{{#each items}}
-<div>
-    <h3>{{this.description}}</h3>
-    <small>{{this._id}}</small>
-    <p>category: {{this.category}}</p>
-    <p>price: {{this.price}}</p>
-    <button>Add to cart</button>
-</div>
-<br><br>
-{{/each}}
 
 
 <div >

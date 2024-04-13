@@ -2,10 +2,11 @@
 <h1>Cart {{_id}}</h1>
 
 {{#each items}}
-    <div>
+    <div class="item-card">
         <h3>{{this.item.description}}</h3>
         <p>category: {{this.item.category}}</p>
         <p>price: {{this.item.price}}</p>
+        <p>quantity: {{this.quantity}}</p>
     </div>
     <br><br>
 {{/each}}

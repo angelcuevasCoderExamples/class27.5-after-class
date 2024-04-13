@@ -11,7 +11,7 @@ class ItemsDao {
     }
 
     async getById(id){
-        return await itemModel.findOne({_id:id})
+        return await itemModel.findOne({_id:id}).lean()
     }
 
     async create(item){
